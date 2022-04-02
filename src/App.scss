@@ -1,0 +1,170 @@
+.App {
+  min-height: 100vh;
+  width: 100%;
+}
+
+.form-page {
+  margin: auto;
+  margin-top: 5rem;
+  max-width: 30rem;
+  padding: 2rem;
+  border: 1px solid white;
+
+  h3 {
+    text-align: center;
+    margin-bottom: 0;
+  }
+
+  p {
+    a {
+      margin-left: 0.5rem;
+      color: rgb(129, 129, 252);
+    }
+  }
+
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    input {
+      width: auto;
+      padding: 0.3rem 1rem;
+      font-size: 1rem;
+      margin-top: 1rem;
+      border: 2px solid transparent;
+
+      &:focus {
+        outline: none;
+        border: 2px solid rgb(114, 196, 114);
+      }
+
+      &[type="file" i] {
+        padding: 0;
+      }
+    }
+
+    p {
+      margin: 0;
+      color: rgb(248, 44, 44);
+    }
+
+    button {
+      background-color: rgb(5, 160, 5);
+      border: none;
+      outline: none;
+      padding: 0.5rem;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 1.5rem;
+
+      &:hover {
+        background-color: rgb(4, 148, 4);
+      }
+    }
+  }
+}
+
+.dashboard-page {
+  display: flex;
+  height: 100%;
+  width: 100%;
+
+  .sidebar {
+    width: 18rem;
+    min-height: 100vh;
+    border-right: 1px solid white;
+  }
+
+  .main {
+    width: 100%;
+    padding-top: 3.5rem;
+  }
+}
+
+.sidebar_lists {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  li {
+    &:first-child {
+      padding: 1rem;
+      color: rgb(158, 158, 248);
+      text-transform: uppercase;
+      border-bottom: 1px solid gray;
+    }
+
+    &:last-child {
+      padding: 1rem;
+      color: rgb(243, 111, 111);
+      border-bottom: 1px solid gray;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #2b2e35;
+      }
+    }
+
+    a {
+      display: block;
+      text-decoration: none;
+      padding: 1rem;
+      padding-left: 1rem;
+      color: white;
+      border-bottom: 1px solid gray;
+
+      &:hover {
+        background-color: #2b2e35;
+      }
+    }
+  }
+}
+
+.table {
+  margin-left: 5rem;
+  max-width: 30rem;
+  border-collapse: collapse;
+  width: 100%;
+
+  tr {
+    width: 100%;
+    border: 1px solid rgb(114, 113, 113);
+    text-align: center;
+
+    td,
+    th {
+      padding: 0.8rem;
+    }
+
+    th {
+      // padding-top: 12px;
+      // padding-bottom: 12px;
+      background-color: #80b4a1;
+      color: white;
+    }
+
+    td img {
+      width: 4rem;
+    }
+  }
+}
+
+.add-prod {
+  text-decoration: none;
+  margin-left: 5rem;
+  border: none;
+  border: 2px solid white;
+  outline: none;
+  padding: 0.6rem 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 1rem;
+  background-color: rgb(247, 220, 162);
+  color: rgb(10, 10, 10);
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgb(247, 213, 139);
+    color: rgb(29, 29, 29);
+  }
+}
