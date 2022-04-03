@@ -31,9 +31,9 @@ const Login = () => {
   };
 
   return (
-    <div className="form-page">
+    <div className="auth-page">
       <h3>User Signup</h3>
-      <form onSubmit={handleSubmit(formSubmitHandler)}>
+      <form onSubmit={handleSubmit(formSubmitHandler)} className="form">
         <input type="text" {...register("email")} placeholder="enter email" />
         <p>{errors.email?.message}</p>
 

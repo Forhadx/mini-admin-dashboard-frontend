@@ -1,13 +1,16 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../store/user/User-Context";
 
 const Sidebar = () => {
   const UserCtx = useContext(UserContext);
   const { userLogout } = UserCtx;
 
+  const navigate = useNavigate();
+
   const logoutHandler = () => {
     userLogout();
+    navigate("/login");
   };
 
   return (

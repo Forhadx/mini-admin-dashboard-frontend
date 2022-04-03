@@ -2,10 +2,12 @@ import React, { useContext, useEffect } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import "./App.scss";
 import Dashboard from "./components/Dashboard";
+import AddProduct from "./Pages/AddProduct";
 import Login from "./Pages/Auth/Login";
 import Signup from "./Pages/Auth/Signup";
 import ProductList from "./Pages/ProductList";
 import UserList from "./Pages/UserList";
+import UpdateProduct from "./Pages/UpdateProduct";
 import UserContext from "./store/user/User-Context";
 
 const App = () => {
@@ -23,7 +25,7 @@ const App = () => {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
-      <Route path="*" element={<Navigate to="/login" replace />} />
+      {/* <Route path="*" element={<Navigate to="/login" replace />} /> */}
     </Routes>
   );
 
@@ -33,7 +35,9 @@ const App = () => {
         <Routes>
           <Route path="/" element={<UserList />} />
           <Route path="/products" element={<ProductList />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="/add-product" element={<AddProduct />} />
+          <Route path="/update-product/:pId" element={<UpdateProduct />} />
+          {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
         </Routes>
       </Dashboard>
     );
