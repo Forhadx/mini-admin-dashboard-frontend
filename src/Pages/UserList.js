@@ -29,7 +29,7 @@ const UserList = () => {
             {users &&
               users.map((user, idx) => (
                 <tr key={idx}>
-                  <td>{idx}</td>
+                  <td>{idx + 1}</td>
                   <td>
                     <img
                       src={process.env.REACT_APP_BASE_URL + "/" + user.image}

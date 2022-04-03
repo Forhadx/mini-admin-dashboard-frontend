@@ -44,7 +44,7 @@ const ProductList = () => {
             {products &&
               products.map((prod, idx) => (
                 <tr key={idx}>
-                  <td>{idx}</td>
+                  <td>{idx + 1}</td>
                   <td>
                     <img
                       src={process.env.REACT_APP_BASE_URL + "/" + prod.pImage}
