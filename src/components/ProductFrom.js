@@ -4,12 +4,15 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import ProductContext from "../store/product/Product-Context";
 import { useNavigate } from "react-router-dom";
+import UserContext from "../store/user/User-Context";
 
 const ProductFrom = (props) => {
   const navigate = useNavigate();
   const { product } = props;
   const ProductCtx = useContext(ProductContext);
   const { addProduct, updateProduct } = ProductCtx;
+  const UserCtx = useContext(UserContext);
+  const { token } = UserCtx;
 
   const validationSchema = Yup.object().shape({
     pName: Yup.string()
@@ -46,7 +49,7 @@ const ProductFrom = (props) => {
       setValue("pName", product.pName);
       setValue("pPrice", product.pPrice);
     }
-  }, [product]);
+  }, [product, setValue]);
 
   const formSubmitHandler = async (data) => {
     const formData = new FormData();
@@ -58,11 +61,11 @@ const ProductFrom = (props) => {
       } else {
         formData.append("pImage", product.pImage);
       }
-      updateProduct(product._id, formData);
+      updateProduct(product._id, formData, token);
       navigate("/products");
     } else {
       formData.append("pImage", data.pImage[0]);
-      addProduct(formData);
+      addProduct(formData, token);
       reset();
     }
   };

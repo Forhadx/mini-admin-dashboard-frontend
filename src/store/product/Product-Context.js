@@ -1,5 +1,5 @@
 import { createContext, useCallback, useReducer } from "react";
-import axios from "axios";
+import axios from "../../Util/axios";
 import Reducer from "./Product-Reducer";
 
 const ProductContext = createContext({
@@ -21,10 +21,14 @@ const initialState = {
 export function ProductContextProvider(props) {
   const [productState, dispatch] = useReducer(Reducer, initialState);
 
-  const onFetchProducts = useCallback(async () => {
+  const onFetchProducts = useCallback(async (userToken) => {
     dispatch({ type: "FETCH_PRODUCTS_START" });
     try {
-      const result = await axios.get("http://localhost:5000/api/products");
+      const result = await axios.get("/api/products", {
+        headers: {
+          Authorization: "Bearer " + userToken,
+        },
+      });
       dispatch({
         type: "FETCH_PRODUCTS",
         products: result.data.products,
@@ -34,15 +38,16 @@ export function ProductContextProvider(props) {
     }
   }, []);
 
-  const onAddProduct = useCallback(async (data) => {
+  const onAddProduct = useCallback(async (data, userToken) => {
     dispatch({
       type: "ADD_PRODUCTS_START",
     });
     try {
-      const result = await axios.post(
-        "http://localhost:5000/api/product",
-        data
-      );
+      const result = await axios.post("/api/product", data, {
+        headers: {
+          Authorization: "Bearer " + userToken,
+        },
+      });
       dispatch({
         type: "ADD_PRODUCTS",
         product: result.data.product,
@@ -54,15 +59,16 @@ export function ProductContextProvider(props) {
     }
   }, []);
 
-  const onUpdateProduct = useCallback(async (id, data) => {
+  const onUpdateProduct = useCallback(async (id, data, userToken) => {
     dispatch({
       type: "UPDATE_PRODUCT_START",
     });
     try {
-      const result = await axios.patch(
-        `http://localhost:5000/api/product/${id}`,
-        data
-      );
+      const result = await axios.patch(`/api/product/${id}`, data, {
+        headers: {
+          Authorization: "Bearer " + userToken,
+        },
+      });
       dispatch({
         type: "UPDATE_PRODUCT",
         product: result.data.product,
@@ -74,12 +80,16 @@ export function ProductContextProvider(props) {
     }
   }, []);
 
-  const onDeleteProduct = useCallback(async (id) => {
+  const onDeleteProduct = useCallback(async (id, userToken) => {
     dispatch({
       type: "DELETE_PRODUCTS_START",
     });
     try {
-      await axios.delete(`http://localhost:5000/api/product/${id}`);
+      await axios.delete(`/api/product/${id}`, {
+        headers: {
+          Authorization: "Bearer " + userToken,
+        },
+      });
       dispatch({
         type: "DELETE_PRODUCTS",
         id: id,

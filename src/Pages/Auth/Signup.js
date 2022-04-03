@@ -1,13 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import UserContext from "../../store/user/User-Context";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const UserCtx = useContext(UserContext);
-  const { userSignup } = UserCtx;
+  const { userSignup, token } = UserCtx;
 
   const validationSchema = Yup.object().shape({
     username: Yup.string()
@@ -48,6 +49,12 @@ const Signup = () => {
     userSignup(formData);
     reset();
   };
+
+  useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+  }, [token, navigate]);
 
   return (
     <div className="auth-page">

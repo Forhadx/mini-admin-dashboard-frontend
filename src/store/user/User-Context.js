@@ -1,5 +1,5 @@
 import { createContext, useCallback, useReducer } from "react";
-import axios from "axios";
+import axios from "../../Util/axios";
 import Reducer from "./User-Reducer";
 
 const UserContext = createContext({
@@ -31,7 +31,7 @@ export function UserContextProvider(props) {
       type: "USER_SIGNUP_START",
     });
     try {
-      const result = await axios.post("http://localhost:5000/api/signup", data);
+      const result = await axios.post("/api/signup", data);
       const expirationDate = new Date(
         new Date().getTime() + 365 * 24 * 3600 * 1000
       );
@@ -56,7 +56,7 @@ export function UserContextProvider(props) {
       type: "USER_LOGIN_START",
     });
     try {
-      const result = await axios.post("http://localhost:5000/api/login", data);
+      const result = await axios.post("/api/login", data);
       const expirationDate = new Date(
         new Date().getTime() + 365 * 24 * 3600 * 1000
       );
@@ -117,16 +117,14 @@ export function UserContextProvider(props) {
   }, [checkAuthTimeout]);
 
   // FETCH ALL USERS
-  const onFetchUsers = useCallback(async () => {
+  const onFetchUsers = useCallback(async (userToken) => {
     dispatch({
       type: "FETCH_USERS_START",
     });
     try {
-      const result = await axios.get("http://localhost:5000/api/users", {
+      const result = await axios.get("/api/users", {
         headers: {
-          Authorization:
-            "Bearer " +
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZAZi5jb20iLCJ1c2VySWQiOiI2MjQ4NTQ5MjllZGU3ZjQwYzE4MmRjNzkiLCJpYXQiOjE2NDg5MjQzMTMsImV4cCI6MTY1MTUxNjMxM30.zrbYXK6XnrVXHbZ5Hg6BOyZJuuJL3CirXPvpr7IeCTY",
+          Authorization: "Bearer " + userToken,
         },
       });
       dispatch({
@@ -144,6 +142,8 @@ export function UserContextProvider(props) {
     users: userState.users,
     token: userState.token,
     userId: userState.userId,
+    loading: userState.loading,
+    error: userState.error,
     userSignup: onUserSignup,
     userLogin: onUserLogin,
     userLogout: onUserLogout,

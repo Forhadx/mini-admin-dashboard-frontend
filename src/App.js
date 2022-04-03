@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "./App.scss";
 import Dashboard from "./components/Dashboard";
 import AddProduct from "./Pages/AddProduct";
@@ -15,17 +15,23 @@ const App = () => {
 
   const { token, autoLogin } = UserCtx;
 
+  const location = useLocation();
+  const { pathname } = location;
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (!token) {
       autoLogin();
     }
-  }, [autoLogin, token]);
+    if (token && (pathname === "/login" || pathname === "/signup")) {
+      navigate("/");
+    }
+  }, [autoLogin, token, pathname, navigate]);
 
   let routes = (
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
-      {/* <Route path="*" element={<Navigate to="/login" replace />} /> */}
     </Routes>
   );
 
@@ -37,7 +43,6 @@ const App = () => {
           <Route path="/products" element={<ProductList />} />
           <Route path="/add-product" element={<AddProduct />} />
           <Route path="/update-product/:pId" element={<UpdateProduct />} />
-          {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
         </Routes>
       </Dashboard>
     );

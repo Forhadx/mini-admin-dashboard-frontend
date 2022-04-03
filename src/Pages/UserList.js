@@ -1,39 +1,48 @@
 import React, { useContext, useEffect } from "react";
+import Spinner from "../components/Spinner";
 import UserContext from "../store/user/User-Context";
 
 const UserList = () => {
   const UserCtx = useContext(UserContext);
-  const { fetchUsers, users } = UserCtx;
+  const { fetchUsers, users, loading, token } = UserCtx;
 
   useEffect(() => {
-    fetchUsers();
-  }, [fetchUsers]);
+    if (token) {
+      fetchUsers(token);
+    }
+  }, [fetchUsers, token]);
 
   return (
-    <table className="table">
-      <thead>
-        <tr>
-          <th>Serial</th>
-          <th>Image</th>
-          <th>Name</th>
-        </tr>
-      </thead>
-      <tbody>
-        {users &&
-          users.map((user, idx) => (
-            <tr key={idx}>
-              <td>{idx}</td>
-              <td>
-                <img
-                  src={process.env.REACT_APP_BASE_URL + "/" + user.image}
-                  alt={user.username}
-                />
-              </td>
-              <td>{user.username}</td>
+    <>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Serial</th>
+              <th>Image</th>
+              <th>Name</th>
             </tr>
-          ))}
-      </tbody>
-    </table>
+          </thead>
+          <tbody>
+            {users &&
+              users.map((user, idx) => (
+                <tr key={idx}>
+                  <td>{idx}</td>
+                  <td>
+                    <img
+                      src={process.env.REACT_APP_BASE_URL + "/" + user.image}
+                      alt={user.username}
+                    />
+                  </td>
+                  <td>{user.username}</td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      )}
+    </>
   );
 };
 

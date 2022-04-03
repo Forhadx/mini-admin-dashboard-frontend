@@ -1,13 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../../store/user/User-Context";
 
 const Login = () => {
+  const navigate = useNavigate();
   const UserCtx = useContext(UserContext);
-  const { userLogin } = UserCtx;
+  const { userLogin, token } = UserCtx;
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().required("Email is required").email("Email is invalid"),
@@ -30,9 +31,15 @@ const Login = () => {
     reset();
   };
 
+  useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+  }, [token, navigate]);
+
   return (
     <div className="auth-page">
-      <h3>User Signup</h3>
+      <h3>User Login</h3>
       <form onSubmit={handleSubmit(formSubmitHandler)} className="form">
         <input type="text" {...register("email")} placeholder="enter email" />
         <p>{errors.email?.message}</p>

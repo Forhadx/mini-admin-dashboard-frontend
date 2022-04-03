@@ -82,7 +82,7 @@ const Reducer = (state, action) => {
       return {
         ...state,
         users: action.users,
-        loading: true,
+        loading: false,
         error: false,
       };
 
