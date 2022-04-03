@@ -26,6 +26,9 @@ const App = () => {
     if (token && (pathname === "/login" || pathname === "/signup")) {
       navigate("/");
     }
+    if (!token && pathname === "/") {
+      navigate("/login");
+    }
   }, [autoLogin, token, pathname, navigate]);
 
   let routes = (
